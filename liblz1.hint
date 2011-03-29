@@ -1,0 +1,8 @@
+category: Archive
+requires: libgcc1 libstdc++6
+external-source: lzlib
+sdesc: "LZip file compression library (runtime)"
+ldesc: "The lzlib compression library provides in-memory LZMA 
+compression and decompression functions, including integrity checking of 
+the decompressed data. The compressed data format used by the library is 
+the lzip format."

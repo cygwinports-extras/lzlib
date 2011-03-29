@@ -1,0 +1,14 @@
+DESCRIPTION="LZip (simplified LZMA) de/compression library"
+HOMEPAGE="http://www.nongnu.org/lzip/lzlib.html"
+SRC_URI="mirror://savannah/lzip/${P}.tar.gz"
+PATCH_URI="1.1-cygwin-dll.patch"
+
+PKG_NAMES="liblz1 liblz-devel"
+liblz1_CONTENTS="usr/bin/cyglz-1.dll usr/share/doc/"
+liblz_devel_CONTENTS="usr/include/ usr/lib/ usr/share/info/"
+
+src_compile() {
+	cd ${B}
+	cygconf --enable-shared
+	cygmake
+}
