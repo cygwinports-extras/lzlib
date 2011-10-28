@@ -1,5 +1,5 @@
---- origsrc/lzlib-1.1/Makefile.in	2011-01-03 07:29:50.000000000 -0600
-+++ src/lzlib-1.1/Makefile.in	2011-03-28 19:06:04.178031100 -0500
+--- origsrc/lzlib-1.2/Makefile.in	2011-05-17 05:21:45.000000000 -0500
++++ src/lzlib-1.2/Makefile.in	2011-10-27 23:14:47.268808800 -0500
 @@ -22,13 +22,13 @@ all : $(progname) $(progname_shared)
  lib$(libname).a: $(lib_objs)
  	$(AR) -rcs $@ $^
@@ -17,11 +17,7 @@
  	$(CXX) $(LDFLAGS) -o $@ $^
  
  $(progname)_profiled : $(objs) lib$(libname).a
-@@ -92,16 +92,12 @@ check : all bbexample lzcheck
- install : all install-info
- 	if [ ! -d "$(DESTDIR)$(includedir)" ] ; then $(INSTALL_DIR) "$(DESTDIR)$(includedir)" ; fi
- 	if [ ! -d "$(DESTDIR)$(libdir)" ] ; then $(INSTALL_DIR) "$(DESTDIR)$(libdir)" ; fi
-+	if [ ! -d "$(DESTDIR)$(bindir)" ] ; then $(INSTALL_DIR) "$(DESTDIR)$(bindir)" ; fi
+@@ -95,13 +95,9 @@ install : all install-info
  	$(INSTALL_DATA) $(VPATH)/$(libname)lib.h "$(DESTDIR)$(includedir)/$(libname)lib.h"
  	$(INSTALL_DATA) ./lib$(libname).a "$(DESTDIR)$(libdir)/lib$(libname).a"
  	if [ -n "$(progname_shared)" ] ; then \
@@ -31,7 +27,8 @@
 -	  else run_ldconfig=yes ; \
 -	  fi ; \
 -	  cd "$(DESTDIR)$(libdir)" && ln -s lib$(libname).so.$(pkgversion) lib$(libname).so.$(soversion) ; \
--	  if [ $${run_ldconfig} = yes ] ; then $(LDCONFIG) "$(DESTDIR)$(libdir)" ; fi ; \
+-	  if [ $${run_ldconfig} = yes ] && [ -x "$(LDCONFIG)" ] ; then "$(LDCONFIG)" -n "$(DESTDIR)$(libdir)" ; fi ; \
++	  if [ ! -d "$(DESTDIR)$(bindir)" ] ; then $(INSTALL_DIR) "$(DESTDIR)$(bindir)" ; fi ; \
 +	  $(INSTALL_DATA) ./lib$(libname).dll.a "$(DESTDIR)$(libdir)/lib$(libname).dll.a" ; \
 +	  $(INSTALL_PROGRAM) ./cyg$(libname)-$(soversion).dll "$(DESTDIR)$(bindir)/cyg$(libname)-$(soversion).dll" ; \
  	fi
